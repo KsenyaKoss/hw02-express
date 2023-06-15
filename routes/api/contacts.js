@@ -6,6 +6,8 @@ const {validateData} = require("../../decorators");
 
 const { isValidId } = require('../../middlewares');
 
+const { isFavoriteExist } = require('../../middlewares');
+
 const schemas = require("../../schemas/contacts");
 
 const router = express.Router();
@@ -21,6 +23,6 @@ router.delete("/:contactId", isValidId, contactsControllers.removeContact);
 
 router.put("/:contactId", isValidId, validateData(schemas.contactAddSchema), contactsControllers.update);
 
-router.patch("/:contactId/favorite", isValidId, validateData(schemas.contactUpdateFavoriteSchema), contactsControllers.updateStatusContact);
+router.patch("/:contactId/favorite", isValidId, isFavoriteExist, validateData(schemas.contactUpdateFavoriteSchema), contactsControllers.updateStatusContact);
 
 module.exports = router;
