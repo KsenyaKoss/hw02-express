@@ -6,7 +6,10 @@ const { HttpError } = require("../helpers");
 
 
 const listContacts = async (req, res) => {
-    const contacts = await Contact.find();
+    const {_id: owner} = req.user
+    const {page = 1, limit = 20} = req.params;
+    const skip = (page - 1) * limit
+    const contacts = await Contact.find({owner}, {skip, limit}).populate('owner', 'name email');
     res.json(contacts);
  
 }
@@ -24,7 +27,8 @@ const getById = async (req, res) => {
 }
 
 const add = async (req, res) => {
-    const result = await Contact.create(req.body);
+    const {_id: owner} = req.user;
+    const result = await Contact.create({...req.body, owner});
     res.status(201).json(result);
 }
 

@@ -2,10 +2,10 @@ const { Schema, model } = require('mongoose');
 
 const { handleMongooseError } = require('../helpers');
 
-const { userRegexp } = require('../constants/user')
+const { userRegexp, subscriptionList } = require('../constants/user')
 
 const userSchema = new Schema({
-    password: {
+      password: {
         type: String,
         required: [true, 'Set password for user'],
       },
@@ -17,10 +17,12 @@ const userSchema = new Schema({
       },
       subscription: {
         type: String,
-        enum: ["starter", "pro", "business"],
+        enum: subscriptionList,
         default: "starter"
       },
-      token: String
+      token: {
+        type: String,
+      }
 }, {versionKey: false});
 
 userSchema.post('save', handleMongooseError);
