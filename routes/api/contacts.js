@@ -4,14 +4,14 @@ const contactsControllers = require('../../controllers/contacts-controllers');
 
 const {validateData} = require("../../decorators");
 
-const { isValidId } = require('../../middlewares');
+const { isValidId, isFavoriteExist, authenticate  } = require('../../middlewares');
 
-const { isFavoriteExist } = require('../../middlewares');
 
 const schemas = require("../../schemas/contacts");
 
 const router = express.Router();
 
+router.use(authenticate);
 
 router.get("/", contactsControllers.listContacts);
 
