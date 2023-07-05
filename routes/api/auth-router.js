@@ -12,7 +12,11 @@ const authRouter = express.Router();
 
 authRouter.post('/register', validateData(userSchemas.userRegisterSchema), authControllers.register);
 
+authRouter.get('/verify/:verificationToken', authControllers.verify);
+
 authRouter.post('/login', validateData(userSchemas.userLoginSchema), authControllers.login);
+
+authRouter.post('/verify',  validateData(userSchemas.userEmailSchema), authControllers.resendVerifyEmail);
 
 authRouter.get('/current', authenticate, authControllers.getCurrent);
 
@@ -20,7 +24,7 @@ authRouter.post('/logout', authenticate, authControllers.logout);
 
 authRouter.patch('/', authenticate,validateData(userSchemas.subscriptionUpdateSchema), authControllers.updateSubscription);
 
-authRouter.patch('/avatars', authenticate, upload.single('avatarURL'), authControllers.updateAvatar)
+authRouter.patch('/avatars', authenticate, upload.single('avatarURL'), authControllers.updateAvatar);
 
 
 module.exports = authRouter;

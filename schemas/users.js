@@ -4,7 +4,7 @@ const { userRegexp, subscriptionList } = require('../constants/user');
 
 const userRegisterSchema = Joi.object({
     email: Joi.string().pattern(userRegexp).required().messages({
-        "any.required": `"missing required email field"`,
+        "any.required": "missing required email field",
     }),
     password: Joi.string().min(6).required().messages({
         'any.required': 'missing required password field',
@@ -16,10 +16,15 @@ const userRegisterSchema = Joi.object({
 
 const userLoginSchema = Joi.object({
     email: Joi.string().pattern(userRegexp).required().messages({
-        "any.required": `"missing required email field"`,
+        "any.required": "missing required email field",
     }),
     password: Joi.string().min(6).required(),
 });
+
+const userEmailSchema = Joi.object({
+    email: Joi.string().pattern(userRegexp).required().messages({
+        "any.required": "missing required field email",
+})});
 
 const  subscriptionUpdateSchema = Joi.object({
     subscription: Joi.string()
@@ -35,4 +40,5 @@ module.exports = {
     userRegisterSchema,
     userLoginSchema,
     subscriptionUpdateSchema,
+    userEmailSchema,
 }
